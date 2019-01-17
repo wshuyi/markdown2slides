@@ -20,7 +20,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         # first, convert the self.md_content links to local
         super().convert()
         # write the localized content back to source md file
-        self.update_source_md()
+        # self.update_source_md()
         # convert markdown to slide markdown
         self.change_md_to_slide_md()
         # convert slide markdown to html with pandoc
