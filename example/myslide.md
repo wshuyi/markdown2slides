@@ -11,6 +11,11 @@
 
 ![](assets/2019-01-16-20-20-09.png)
 
+### inline image
+
+- text
+- ![](assets/2019-01-16-20-20-09.png)
+
 
 ### web image
 

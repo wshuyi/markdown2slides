@@ -19,8 +19,6 @@ class MarkdownRevealjsConverter(MarkdownConverter):
     def convert(self):
         # first, convert the self.md_content links to local
         super().convert()
-        # write the localized content back to source md file
-        # self.update_source_md()
         # convert markdown to slide markdown
         self.change_md_to_slide_md()
         # convert slide markdown to html with pandoc
@@ -108,7 +106,6 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         inline_image_links = re.findall(regex, data)
         regex = r"data-background-image=\"(.*?)\""
         background_image_links = re.findall(regex ,data)
-        # regex = r"data-background-video=\"(.*?)\""
         regex = r"<video\s.*src=\"(.*)\""
         background_video_links = re.findall(regex, data)
 
@@ -123,9 +120,7 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         subst = "\\1assets/\\3\""
         data = re.sub(regex, subst, data, 0, re.MULTILINE)
         # background video path convert:
-        # regex = r"(data-background-video=\")(.*)/(.*?)\""
         regex = r"(<video\s.*src=\")(.*)/(.*?)\""
-        # regex = r"(<video\s.*src=\")(.*)/(.*?)(\"\s.*>)"
         subst = "\\1assets/\\3\""
         data = re.sub(regex, subst, data, 0, re.MULTILINE)
 
@@ -197,19 +192,12 @@ class MarkdownRevealjsConverter(MarkdownConverter):
         # make background images to separate slide
         regex = r"^ *!\[.*\]\((.*)\)"
         subst = "\n\n##  {data-background-image=\"\\1\" data-background-size=\"contain\"}"
-        #subst = "<section id=\"section\" class=\"slide level2\" data-background-image=\"\\1\" data-background-size=\"contain\"><h2></h2></section>"
         data = re.sub(regex, subst, data, 0, re.MULTILINE)
 
         # make video links to separate video slide
         regex = r"^ *\[video\]\((.*)\)"
-        # subst = "\n\n##  {data-background-video=\"\\1\"}"
         subst = "\n\n## {} \n\n<video class=\"stretch\" src=\"\\1\" data-autoplay controls></video>"
         data = re.sub(regex, subst, data, 0, re.MULTILINE)
-
-        # # make video links based on "vvv:" tag
-        # regex = r"^\s*[-\*]*\s*vvv:(.*\.[mM][Pp]4)"
-        # subst = "\n\n##  {data-background-video=\"\\1\"}"
-        # data = re.sub(regex, subst, data, 0, re.MULTILINE)
 
         # change inline images to html link
         regex = r"^ *([-\*])\s+!\[(.*)\]\((.*)\)"
