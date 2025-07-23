@@ -43,7 +43,7 @@ var RevealNotes = (function() {
 					type: 'connect',
 					url: window.location.protocol + '//' + window.location.host + window.location.pathname + window.location.search,
 					state: Reveal.getState()
-				} ), '*' );
+				} ), notesPopup.origin || window.location.origin );
 			}, 500 );
 
 			window.addEventListener( 'message', function( event ) {
@@ -100,7 +100,7 @@ var RevealNotes = (function() {
 				messageData.markdown = typeof notesElement.getAttribute( 'data-markdown' ) === 'string';
 			}
 
-			notesPopup.postMessage( JSON.stringify( messageData ), '*' );
+			notesPopup.postMessage( JSON.stringify( messageData ), notesPopup.origin || window.location.origin );
 
 		}
 
